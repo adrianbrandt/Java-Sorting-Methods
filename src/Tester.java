@@ -52,6 +52,7 @@ public class Tester {
                         System.out.println("--------------------------------------");
                         System.out.println("|   n         t(ms)      T/(nlog(n)) |");
                         System.out.println("|------------------------------------|");
+
                         randomize(A);
                         time = System.currentTimeMillis();
                         logarithmicSorting.quickSort(A, 0, n - 1);
@@ -87,6 +88,7 @@ public class Tester {
                         System.out.println("--------------------------------------");
                         System.out.println("|   n         t(ms)       t/n^n      |");
                         System.out.println("|------------------------------------|");
+
                         randomize(A);
                         time = System.currentTimeMillis();
                         sequentialSorting.insertionSort(A);
@@ -116,15 +118,18 @@ public class Tester {
                         System.out.println("Enter number between 1 and " +MAX_L);
                     }
                     else if (n > 0 && n <MAX_L) {
+
                         System.out.println("\nMerge sort for n= " + n);
                         System.out.println("--------------------------------------");
                         System.out.println("|   n         t(ms)      T/(nlog(n)) |");
                         System.out.println("|------------------------------------|");
+
                         randomize(A);
                         time = System.currentTimeMillis();
                         logarithmicSorting.mergeSort(A, 0, n - 1);
                         time = System.currentTimeMillis() - time;
                         c = time / (n * Math.log(n));
+
                         for (int i = 0; i < 15; i ++) {
 
                             randomize(A);
@@ -139,6 +144,7 @@ public class Tester {
                         }
                         avgCT = (av / ((float) n * Math.log(n)));
                         avgC = ((avgCT / clock));
+
                         System.out.println("|------------------------------------|");
                         System.out.println("Average complexity is   : " + avgC);
                         System.out.println("Complexity for n= " + n + " : " + c);
@@ -154,6 +160,7 @@ public class Tester {
                         System.out.println("--------------------------------------");
                         System.out.println("|   n         t(ms)         O(w*n)   |");
                         System.out.println("|------------------------------------|");
+
                         randomize(A);
                         time = System.currentTimeMillis();
                         radixSorting.radixsort(A, ma);
