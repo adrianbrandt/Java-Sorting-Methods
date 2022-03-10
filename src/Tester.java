@@ -159,7 +159,7 @@ public class Tester {
                         radixSorting.radixSort(A, w);
                         time = System.currentTimeMillis() - time;
 
-                        c = ((time/(double)(n)));
+                        c = ((time/(double)(n*w)));
 
                         int i;
                         for (i = 0; i < 15; i ++) {
@@ -170,7 +170,7 @@ public class Tester {
                             time = System.currentTimeMillis() - time;
 
 
-                            System.out.printf("|%6d     %6d        %6f    |\n", n, time, ((time)/(double)(n)));
+                            System.out.printf("|%6d     %6d        %6f    |\n", n, time, ((time)/(double)(n*w)));
 
                             avgC += ((time)/(double)n);
                         }
