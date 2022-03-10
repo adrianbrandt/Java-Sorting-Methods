@@ -1,55 +1,34 @@
-import java.util.Arrays;
-import java.util.Random;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class radixSorting {
 
-    // Radix Sort
-    static void radixsort(int[] A, int ma)
-    {
-        int m = getMax(A, ma);
+    void sort(int[] a, int w) {
+        int n = a.length;
 
-        for (int exp = 1; m / exp > 0; exp *= 10)
-            countSort(A, ma, exp);
+        Queue[] Q = new Queue[10];
 
+        for (int i = 0; i < 10; i++)
+            Q[i] = new LinkedList<>();
 
-    }
+        for (int m = 0; m < w; m++) {
+            for (int k : a) {
+                int dig = k % 10;
+                Q[dig].add(k);
+            }
 
-
-    // Count sorting for radix
-    static void countSort(int[] A, int ma, int exp)
-    {
-        int[] output = new int[ma];
-        int i;
-        int[] count = new int[10];
-        Arrays.fill(count, 0);
-
-        for (i = 0; i < ma; i++)
-            count[(A[i] / exp) % 10]++;
-
-
-        for (i = 1; i < 10; i++)
-            count[i] += count[i - 1];
-
-
-        for (i = ma - 1; i >= 0; i--) {
-            output[count[(A[i] / exp) % 10] - 1] = A[i];
-            count[(A[i] / exp) % 10]--;
+            int j = 0;
+            for (int i = 0; i < 10; i++)
+                while (!Q[i].isEmpty())
+                    a[j++] = (int) Q[i].remove();
         }
-
-        for (i = 0; i < ma; i++)
-            A[i] = output[i];
     }
 
-    // Get max for radix sort
-    static int getMax(int[] A, int ma)
-    {
-        int max = A[0];
-        for (int i = 1; i < ma; i++)
-            if (A[i] > max)
-                max = A[i];
-        return max;
+    public static void radixSort(int[] a, int m) {
+        radixSorting rS = new radixSorting();
+        rS.sort(a, m);
+
     }
-
-
 
 }

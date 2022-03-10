@@ -7,18 +7,12 @@ public class Tester {
 
         int MAX_S = 100000, MAX_L = 100000000, MAX_R = 1000000;
         int[] A;
-        int n,ma,answer;
+        int n,w,answer;
         long time;
-        double c,avgC,avgCT,av = 0;
+        double c,avgC = 0,avgCT,av = 0;
         int clock = 0;
-        int m = (String.valueOf(MAX_R-1).length());
-
-
 
         while (true) {
-
-
-
 
             System.out.println("""
                     \n
@@ -30,7 +24,6 @@ public class Tester {
                     
                     EXIT: 5""");
 
-
             answer = scan.nextInt();
 
             System.out.println("Amount of numbers to sort (n): ");
@@ -38,7 +31,7 @@ public class Tester {
 
 
             A = new int[n];
-            ma = A.length;
+            w = String.valueOf(n).length();
 
             switch (answer) {
                 case 1 -> {
@@ -163,24 +156,25 @@ public class Tester {
 
                         randomize(A);
                         time = System.currentTimeMillis();
-                        radixSorting.radixsort(A, ma);
-
+                        radixSorting.radixSort(A, w);
                         time = System.currentTimeMillis() - time;
-                        c = n*m;
+
+                        c = ((time/(double)(n)));
+
                         int i;
                         for (i = 0; i < 15; i ++) {
 
                             randomize(A);
                             time = System.currentTimeMillis();
-                            radixSorting.radixsort(A, ma);
+                            radixSorting.radixSort(A, w);
                             time = System.currentTimeMillis() - time;
 
 
-                            System.out.printf("|%6d     %6d        %9.4e    |\n", n, time, (double)m*n);
+                            System.out.printf("|%6d     %6d        %6f    |\n", n, time, ((time)/(double)(n)));
 
-                            clock += (double)c;
+                            avgC += ((time)/(double)n);
                         }
-                        avgC = (clock/(double)i);
+                        avgC = (avgC/i);
                         System.out.println("|------------------------------------|");
                         System.out.println("Average complexity is   : " + avgC);
                         System.out.println("Complexity for n= " + n + " : " + c);
