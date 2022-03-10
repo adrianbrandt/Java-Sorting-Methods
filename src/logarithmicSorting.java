@@ -1,47 +1,39 @@
-public class logarithmicSorting
-{
-    public static void quickSort(int A[], int min, int max)
-    {
-        // Quicksort av array med heltall
+public class logarithmicSorting {
 
+    //Quick sort
+    public static void quickSort(int[] A, int min, int max)
+    {
         int indexofpartition;
 
         if (max - min  > 0)
         {
-            // Partisjonerer array
             indexofpartition = findPartition(A, min, max);
-
-            // Sorterer venstre del
             quickSort(A, min, indexofpartition - 1);
-
-            // Sorterer høyre del
             quickSort(A, indexofpartition + 1, max);
         }
     }
 
+
+
+    // Finds partiotions for quicksort
     private static int findPartition (int[] A, int min, int max)
     {
         int left, right;
         int temp, partitionelement;
 
-        // Bruker *fÃ¸rste* element til Ã¥ dele opp
         partitionelement = A[min];
 
         left = min;
         right = max;
 
-        // GjÃ¸r selve partisjoneringen
         while (left < right)
         {
-            // Finn et element som er stÃ¸rre enn part.elementet
             while (A[left] <= partitionelement && left < right)
                 left++;
 
-            // Finn et element som er mindre enn part.elementet
             while (A[right] > partitionelement)
                 right--;
 
-            // Bytt om de to hvis ikke ferdig
             if (left < right)
             {
                 temp = A[left];
@@ -50,19 +42,16 @@ public class logarithmicSorting
             }
         }
 
-        // Sett part.elementet mellom partisjoneringene
         temp = A[min];
         A[min] = A[right];
         A[right] = temp;
 
-        // Returner indeksen til part.elementet
         return right;
     }
 
+    // Merge sort
     public static void mergeSort (int[] A, int min, int max)
     {
-
-        // Flettesortering av array med heltall
 
         if (min==max)
             return;
@@ -74,15 +63,12 @@ public class logarithmicSorting
 
         temp = new int[size];
 
-        // Flettesorterer de to halvdelene av arrayen
         mergeSort(A, min, mid);
         mergeSort(A, mid + 1,max);
 
-        // Kopierer array over i temp.array
         for (index1 = 0; index1 < size; index1++)
             temp[index1] = A[min + index1];
 
-        // Fletter sammen de to sorterte halvdelene over i A
         left = 0;
         right = mid - min + 1;
         for (index1 = 0; index1 < size; index1++)
@@ -99,4 +85,5 @@ public class logarithmicSorting
                 A[index1 + min] = temp[left++];
         }
     }
+
 }
