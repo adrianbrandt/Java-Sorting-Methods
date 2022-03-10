@@ -4,7 +4,7 @@ import java.util.Random;
 public class radixSorting {
 
     // Radix Sort
-    static int radixsort(int[] A, int ma)
+    static void radixsort(int[] A, int ma)
     {
         int m = getMax(A, ma);
 
@@ -12,7 +12,6 @@ public class radixSorting {
             countSort(A, ma, exp);
 
 
-        return m;
     }
 
 

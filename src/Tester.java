@@ -5,13 +5,13 @@ public class Tester {
 
         Scanner scan = new Scanner(System.in);
 
-        int MAX_SEQUENTIAL = 100000, MAX_N = 100000000;
+        int MAX_S = 100000, MAX_L = 100000000, MAX_R = 1000000;
         int[] A;
         int n,ma,answer;
         long time;
         double c,avgC,avgCT,av = 0;
-        long[] t = new long[15];
         int clock = 0;
+        int m = (String.valueOf(MAX_R-1).length());
 
 
 
@@ -21,21 +21,20 @@ public class Tester {
 
 
             System.out.println("""
+                    \n
                     Welcome to the sorter, which sorter would you like to use?
                     Quicksort: 1
                     Insertion sort: 2
                     Merge sort: 3
-                    Radix sort: 4""");
+                    Radix sort: 4
+                    
+                    EXIT: 5""");
+
+
             answer = scan.nextInt();
 
             System.out.println("Amount of numbers to sort (n): ");
             n = scan.nextInt();
-
-            if (n < 0 || n > MAX_N)
-            {
-                System.out.println("Use  1 <= n <= " + MAX_N);
-                System.exit(1);
-            }
 
 
             A = new int[n];
@@ -43,122 +42,147 @@ public class Tester {
 
             switch (answer) {
                 case 1 -> {
-                    System.out.println("\nQuicksort for n= " + n);
-                    System.out.println("--------------------------------------");
-                    System.out.println("|   n         t(ms)      T/(nlog(n)) |");
-                    System.out.println("|------------------------------------|");
-                    randomize(A);
-                    time = System.currentTimeMillis();
-                    logarithmicSorting.quickSort(A, 0, n - 1);
-                    time = System.currentTimeMillis() - time;
-                    c = time / (n * Math.log(n));
-                    for (int i = 10000; i < 150001; i += 10000) {
-
+                    if (n >MAX_L)
+                    {
+                        System.out.println("Enter number between 1 and " +MAX_L);
+                    }
+                    else if (n > 0 && n <MAX_L)
+                    {
+                        System.out.println("\nQuicksort for n= " + n);
+                        System.out.println("--------------------------------------");
+                        System.out.println("|   n         t(ms)      T/(nlog(n)) |");
+                        System.out.println("|------------------------------------|");
                         randomize(A);
                         time = System.currentTimeMillis();
                         logarithmicSorting.quickSort(A, 0, n - 1);
                         time = System.currentTimeMillis() - time;
+                        c = time / (n * Math.log(n));
+                        for (int i = 0; i < 15; i ++) {
 
-                        System.out.printf("|%6d     %6d        %9.4e |\n", n, time, (time / ((double) n * Math.log(n))));
+                            randomize(A);
+                            time = System.currentTimeMillis();
+                            logarithmicSorting.quickSort(A, 0, n - 1);
+                            time = System.currentTimeMillis() - time;
 
-                        av += time;
-                        clock += 1;
+                            System.out.printf("|%6d     %6d        %9.4e |\n", n, time, (time / ((double) n * Math.log(n))));
+
+                            av += time;
+                            clock += 1;
+                        }
+                        avgCT = (av / ((float) n * Math.log(n)));
+                        avgC = ((avgCT / clock));
+                        System.out.println("|------------------------------------|");
+                        System.out.println("Average complexity is  : " + avgC);
+                        System.out.println("Complexity for n= " + n + ": " + c);
+                        System.out.println("Quicksort completed in : " + time + "ms");
                     }
-                    avgCT = (av / ((float) n * Math.log(n)));
-                    avgC = ((avgCT / clock));
-                    System.out.println("|------------------------------------|");
-                    System.out.println("Average complexity is  : " + avgC);
-                    System.out.println("Complexity for n= " + n + ": " + c);
-                    System.out.println("Quicksort completed in : " + time + "ms");
-                    return;
                 }
                 case 2 -> {
-                    System.out.println("\nInsertion sort for n= " + n);
-                    System.out.println("--------------------------------------");
-                    System.out.println("|   n         t(ms)       t/n^n      |");
-                    System.out.println("|------------------------------------|");
-                    randomize(A);
-                    time = System.currentTimeMillis();
-                    sequentialSorting.insertionSort(A);
-                    time = System.currentTimeMillis() - time;
-                    c = time / ((double) (n * n));
-                    for (int i = 10000; i < 100001; i += 10000) {
+
+                    if (n >MAX_S){
+                        System.out.println("Please enter number between 1 and " + MAX_S);
+                    }
+                    else if (n > 0 && n < MAX_S) {
+                        System.out.println("\nInsertion sort for n= " + n);
+                        System.out.println("--------------------------------------");
+                        System.out.println("|   n         t(ms)       t/n^n      |");
+                        System.out.println("|------------------------------------|");
                         randomize(A);
                         time = System.currentTimeMillis();
                         sequentialSorting.insertionSort(A);
                         time = System.currentTimeMillis() - time;
+                        c = time / ((double) (n * n));
+                        for (int i = 0; i < 15; i ++) {
+                            randomize(A);
+                            time = System.currentTimeMillis();
+                            sequentialSorting.insertionSort(A);
+                            time = System.currentTimeMillis() - time;
 
-                        System.out.printf("|%6d     %6d        %9.4e |\n", n, time, time / ((double) (n * n)));
-                        av += time;
-                        clock += 1;
+                            System.out.printf("|%6d     %6d        %9.4e |\n", n, time, time / ((double) (n * n)));
+                            av += time;
+                            clock += 1;
+                        }
+                        avgCT = av / ((double) (n * n));
+                        avgC = ((avgCT / clock));
+                        System.out.println("|------------------------------------|");
+                        System.out.println("Average complexity is       : " + avgC);
+                        System.out.println("Complexity for n= " + n + "     : " + c);
+                        System.out.println("Insertion sort completed in : " + time + "ms");
                     }
-                    avgCT = av / ((double) (n * n));
-                    avgC = ((avgCT / clock));
-                    System.out.println("|------------------------------------|");
-                    System.out.println("Average complexity is       : " + avgC);
-                    System.out.println("Complexity for n= " + n + "     : " + c);
-                    System.out.println("Insertion sort completed in : " + time + "ms");
-                    return;
                 }
                 case 3 -> {
-                    System.out.println("\nMerge sort for n= " + n);
-                    System.out.println("--------------------------------------");
-                    System.out.println("|   n         t(ms)      T/(nlog(n)) |");
-                    System.out.println("|------------------------------------|");
-                    randomize(A);
-                    time = System.currentTimeMillis();
-                    logarithmicSorting.mergeSort(A, 0, n - 1);
-                    time = System.currentTimeMillis() - time;
-                    c = time / (n * Math.log(n));
-                    for (int i = 10000; i < 150001; i += 10000) {
-
+                    if (n >MAX_L)
+                    {
+                        System.out.println("Enter number between 1 and " +MAX_L);
+                    }
+                    else if (n > 0 && n <MAX_L) {
+                        System.out.println("\nMerge sort for n= " + n);
+                        System.out.println("--------------------------------------");
+                        System.out.println("|   n         t(ms)      T/(nlog(n)) |");
+                        System.out.println("|------------------------------------|");
                         randomize(A);
                         time = System.currentTimeMillis();
                         logarithmicSorting.mergeSort(A, 0, n - 1);
                         time = System.currentTimeMillis() - time;
+                        c = time / (n * Math.log(n));
+                        for (int i = 0; i < 15; i ++) {
 
-                        System.out.printf("|%6d     %6d        %f |\n", n, time, (time / ((double) n * Math.log(n))));
+                            randomize(A);
+                            time = System.currentTimeMillis();
+                            logarithmicSorting.mergeSort(A, 0, n - 1);
+                            time = System.currentTimeMillis() - time;
 
-                        av += time;
-                        clock += 1;
+                            System.out.printf("|%6d     %6d        %9.4e |\n", n, time, (time / ((double) n * Math.log(n))));
+
+                            av += time;
+                            clock += 1;
+                        }
+                        avgCT = (av / ((float) n * Math.log(n)));
+                        avgC = ((avgCT / clock));
+                        System.out.println("|------------------------------------|");
+                        System.out.println("Average complexity is   : " + avgC);
+                        System.out.println("Complexity for n= " + n + " : " + c);
+                        System.out.println("Merge sort completed in : " + time + "ms");
                     }
-                    avgCT = (av / ((float) n * Math.log(n)));
-                    avgC = ((avgCT / clock));
-                    System.out.println("|------------------------------------|");
-                    System.out.println("Average complexity is   : " + avgC);
-                    System.out.println("Complexity for n= " + n + " : " + c);
-                    System.out.println("Merge sort completed in : " + time + "ms");
-                    return;
                 }
                 case 4 -> {
-                    System.out.println("\nRadix sort for n= " + n);
-                    System.out.println("--------------------------------------");
-                    System.out.println("|   n         t(ms)         O(w*n)   |");
-                    System.out.println("|------------------------------------|");
-                    randomize(A);
-                    time = System.currentTimeMillis();
-                    int m = radixSorting.radixsort(A, ma);
-                    radixSorting.radixsort(A, ma);
-                    time = System.currentTimeMillis() - time;
-                    c = n * m;
-                    for (int i = 10000; i < 150001; i += 10000) {
-
+                    if (n >MAX_R){
+                        System.out.println("Please enter number between 1 and " + MAX_R);
+                    }
+                    else if (n > 0 && n < MAX_R) {
+                        System.out.println("\nRadix sort for n= " + n);
+                        System.out.println("--------------------------------------");
+                        System.out.println("|   n         t(ms)         O(w*n)   |");
+                        System.out.println("|------------------------------------|");
                         randomize(A);
                         time = System.currentTimeMillis();
                         radixSorting.radixsort(A, ma);
-                        m = radixSorting.radixsort(A, ma);
+
                         time = System.currentTimeMillis() - time;
+                        c = n*m;
+                        int i;
+                        for (i = 0; i < 15; i ++) {
 
-                        System.out.printf("|%6d     %6d        %d |\n", n, time, m * n);
+                            randomize(A);
+                            time = System.currentTimeMillis();
+                            radixSorting.radixsort(A, ma);
+                            time = System.currentTimeMillis() - time;
 
-                        clock += 1;
+
+                            System.out.printf("|%6d     %6d        %9.4e    |\n", n, time, (double)m*n);
+
+                            clock += (double)c;
+                        }
+                        avgC = (clock/(double)i);
+                        System.out.println("|------------------------------------|");
+                        System.out.println("Average complexity is   : " + avgC);
+                        System.out.println("Complexity for n= " + n + " : " + c);
+                        System.out.println("Radix sort completed in : " + time + "ms");
                     }
-                    avgC = (((double) m * n / clock));
-                    System.out.println("|------------------------------------|");
-                    System.out.println("Average complexity is   : " + avgC);
-                    System.out.println("Complexity for n= " + n + " : " + c);
-                    System.out.println("Radix sort completed in : " + time + "ms");
+                }
+                case 5 -> {
                     return;
+
                 }
                 default -> System.out.println("Not a valid option! Please select another");
             }
