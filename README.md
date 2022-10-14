@@ -11,5 +11,5 @@ Merge sort.
 Radix sort.
 
 
-#### Requirements.
+#### Requirements:
 Java JDK 16+
